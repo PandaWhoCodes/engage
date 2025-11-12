@@ -19,7 +19,13 @@ export default function Home() {
     setResult(null)
 
     try {
-      const response = await fetch("/api/generate", {
+      // In development, call backend directly on port 8080
+      // In production, both are served from same origin
+      const apiUrl = process.env.NODE_ENV === 'development'
+        ? 'http://localhost:8080/api/generate'
+        : '/api/generate'
+
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
